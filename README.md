@@ -22,6 +22,7 @@ CPU(central processing unit)，即中央处理器。在冯·诺依曼计算机�
 |L1 Cache|512KB|512KB|
 |L2 Cache|2MB|4MB|
 |L3 Cache|16MB|32MB|
+
 看到这个对比图我们会发现CPU缓存小的可怜，那么再来看一张图：:scream:
 ![AIDA](.picture/AIDA64-Benchmark.png)
 不要惊讶:smirk:，这就是CPU缓存的读写速度，快的令人发指。这种高速缓存的成本是非常高的，加上这种高速缓存均由静态RAM组成，结构较复杂，在有限的CPU芯片面积上容量做大不太可能。其次，缓存也是处理器中的发热大户，设计太大容量所带来的发热量将会非常"可观"。综合成本等因素，CPU的缓存设计在了合理的大小。
