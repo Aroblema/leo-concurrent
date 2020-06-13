@@ -45,6 +45,7 @@ L1 Cache还分为数据缓存D-Cache(Data Cache)和指令缓存I-Cache(Instructi
 #### - cache line
 在说MESI之前我们先说说缓存行cache line。缓存由缓存行组成，缓存行是缓存和内存数据交换的最小单位。目前处理器常见的缓存行大小为64Byte（早期较旧的处理器缓存行为32Byte）。当多个线程对同一个缓存行访问时，其中一个线程会锁住缓存行，然后操作，这个时候其他线程无法操作缓存行。
 ![cache line](.picture/cache-line.png)
+
 MESI协议将cache line的状态分为modify、exclusive、shared、invalid，分别是修改、独占、共享和失效。在MESI协议中，cache line状态可以是M、E、S、I，地址则是cache line中映射的内存地址，数据是从内存中读取的数据。
 - modified：当前CPU cache拥有最新数据（最新的cache line），其他CPU拥有失效数据（cache line的状态是invalid），虽然当前CPU cache中的数据和主存不一致，但以当前CPU cache的数据为准
 - exclusive：只有当前CPU有数据，其他CPU中没有该数据，当前CPU cache中的数据和主存一致
@@ -62,4 +63,7 @@ MESI协议将cache line的状态分为modify、exclusive、shared、invalid，�
 #### - MESI Invalid
 这里再说一点，MESI缓存一致性协议<font color=red>**并非一直有效**</font>。当从主存读取到单个数据的存储跨缓存行操作时，MESI便失效了，此时只能通过总线加锁来实现缓存一致。
 
-### 1.4 指令重排问题
+### 1.4 指令重排序问题
+为了使处理器内部的运算单元性能被充分利用，处理器可能会对输入代码进行乱序执行（Out-Of-Order Execution）优化。处理器在计算之后将乱序执行的结果重组，保证该结果与顺序执行的结果是一致的，但并不保证程序中各个语句计算的先后顺序与输入代码中的顺序一致。因此，如果存在一个计算任务依赖另一个计算任务的中间结果，那么其顺序性并不能靠代码的先后顺序来保证。与处理器的乱序执行优化类似，Java虚拟机的即时编译器中也有类似的指令重排序（Instruction Reorder）优化。
+
+### 1.5 JMM
